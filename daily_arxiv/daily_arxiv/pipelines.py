@@ -1,5 +1,4 @@
-@'
-# Define your item pipelines here
+﻿# Define your item pipelines here
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
@@ -21,21 +20,16 @@ tier1_keywords = [
 ]
 
 tier2_keywords = [
-# AI/ML
 "artificial intelligence", "machine learning", "deep learning", "reinforcement learning",
 "neural network", "transformer", "llm", "anomaly detection", "predictive maintenance",
 "demand forecasting", "passenger flow prediction",
-# Ontology/Knowledge
 "ontology", "knowledge graph", "railway ontology", "transportation ontology", "transit ontology",
 "semantic model", "semantic interoperability", "ontology alignment", "ontology matching",
 "knowledge representation", "owl", "rdf", "sparql",
-# Infrastructure/Asset
 "track inspection", "wheel-rail", "turnout", "switch", "traction power",
 "condition monitoring", "fault diagnosis", "asset management",
-# System/Control
 "control system", "cyber-physical system", "cps", "system modeling",
 "system identification", "state estimation",
-# Operations/Optimization
 "timetabling", "rescheduling", "dispatching", "traffic management", "headway",
 "dwell time", "delay propagation", "capacity planning", "operation optimization",
 "scheduling", "multi-agent scheduling"
@@ -72,4 +66,3 @@ spider.logger.info(f"Filtered out by two-tier rule: {item.get('id')}")
 return None
 
 return item
-'@ | Set-Content -Encoding UTF8 "daily_arxiv\daily_arxiv\pipelines.py"
