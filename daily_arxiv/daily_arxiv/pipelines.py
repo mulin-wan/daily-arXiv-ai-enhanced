@@ -11,7 +11,7 @@ import re
 class DailyArxivPipeline:
 def __init__(self):
 self.page_size = 100
-self.client = arxiv.Client(self.page_size)
+self.client = arxiv.Client(page_size=self.page_size)
 
 # ===== Two-tier railway+ontology filter =====
 tier1_keywords = [
