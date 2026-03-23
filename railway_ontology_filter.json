@@ -1,0 +1,33 @@
+{
+"tier1": [
+"railway","rail transit","urban rail","metro","subway","commuter rail",
+"high-speed rail","train operation","train control",
+"ontology","railway ontology","transportation ontology","transit ontology"
+],
+"tier2": {
+"ai_ml": [
+"artificial intelligence","machine learning","deep learning","reinforcement learning",
+"neural network","transformer","llm","anomaly detection","predictive maintenance",
+"demand forecasting","passenger flow prediction"
+],
+"ontology_knowledge": [
+"ontology","knowledge graph","railway ontology","transportation ontology","transit ontology",
+"semantic model","semantic interoperability","ontology alignment","ontology matching",
+"knowledge representation","owl","rdf","sparql"
+],
+"infrastructure_asset": [
+"track inspection","wheel-rail","turnout","switch","traction power",
+"condition monitoring","fault diagnosis","asset management"
+],
+"system_control": [
+"control system","cyber-physical system","cps","system modeling",
+"system identification","state estimation"
+],
+"operations_optimization": [
+"timetabling","rescheduling","dispatching","traffic management","headway",
+"dwell time","delay propagation","capacity planning","operation optimization",
+"scheduling","multi-agent scheduling"
+]
+},
+"rule": "tier1>=1 AND tier2>=1"
+}
