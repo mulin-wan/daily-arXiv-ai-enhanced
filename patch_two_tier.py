@@ -1,17 +1,14 @@
+﻿from pathlib import Path
 import re
-from pathlib import Path
 
 p = Path(r"daily_arxiv/daily_arxiv/pipelines.py")
 s = p.read_text(encoding="utf-8")
 
-if "def _passes_two_tier_filter" in s:
-print("Two-tier filter already exists.")
-raise SystemExit(0)
-
 if "import re" not in s:
 s = s.replace("import arxiv", "import arxiv\nimport re")
 
-helper = '''
+if "def _passes_two_tier_filter" not in s:
+helper = """
 # ===== Two-tier railway+ontology filter =====
 tier1_keywords = [
 "railway","rail transit","urban rail","metro","subway","commuter rail",
@@ -47,20 +44,24 @@ def _passes_two_tier_filter(self, title, summary):
 text = self._normalize_text(f"{title} {summary}")
 return self._hits(text, self.tier1_keywords) >= 1 and self._hits(text, self.tier2_keywords) >= 1
 
-'''
-
+"""
 marker = " def process_item(self, item, spider):"
+if marker not in s:
+raise RuntimeError("process_item not found")
 s = s.replace(marker, helper + marker)
 
+if "two-tier hard filter" not in s:
 target = ' item["summary"] = paper.summary\n'
-replace = ''' item["summary"] = paper.summary
+if target not in s:
+raise RuntimeError("summary assignment not found")
+replace = """ item["summary"] = paper.summary
 
 # two-tier hard filter
 if not self._passes_two_tier_filter(item.get("title", ""), item.get("summary", "")):
 spider.logger.info(f"Filtered out by two-tier rule: {item.get('id')}")
 return None
-'''
+"""
 s = s.replace(target, replace)
 
 p.write_text(s, encoding="utf-8")
-print("Patched pipelines.py")
+print("Patched pipelines.py successfully.")
