@@ -1,7 +1,15 @@
 arxiv:
-  categories:  # 文章类型
-    - cs.CV
-    - cs.CL
+  # Categories covering Railway + AI + Ontology topics.
+  # These are reference values only; the actual list is set via GitHub Actions
+  # variable CATEGORIES (repo Settings -> Variables -> Actions).
+  # Recommended: cs.AI, cs.LG, cs.IR, eess.SY, cs.RO, cs.SE
+  categories:
+    - cs.AI   # Artificial Intelligence
+    - cs.LG   # Machine Learning
+    - cs.IR   # Information Retrieval (knowledge graphs, ontologies)
+    - eess.SY # Systems and Control (railway control systems)
+    - cs.RO   # Robotics (autonomous train / vehicle perception)
+    - cs.SE   # Software Engineering (ontology engineering)
 
 llm:
   model_name: 'deepseek-chat'  # 使用的LLM模型

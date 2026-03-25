@@ -5,7 +5,10 @@ name: arXiv-daily-ai-enhanced
 
 on:
   schedule:
-    - cron: "30 1 * * *"
+    # 11:00 UTC = 07:00 ET (EDT, UTC-4, mid-Mar to early-Nov)
+    #           = 06:00 ET (EST, UTC-5, early-Nov to mid-Mar)
+    # arXiv publishes new papers at ~01:00 UTC; by 11:00 UTC the latest batch is available.
+    - cron: "0 11 * * *"
   workflow_dispatch:
 
 
@@ -355,7 +358,7 @@ jobs:
         # 设置Git配置以处理自动合并 / Set Git config for automatic merging
         git config pull.rebase true
         git config rebase.autoStash true
-        
+
         # 尝试推送数据变更到 data 分支 / Try to push data changes to data branch
         for i in {1..3}; do
           echo "推送数据变更尝试 $i / Push data changes attempt $i"
@@ -371,5 +374,23 @@ jobs:
             fi
           fi
         done
+
+    - name: Send email digest (Railway + AI + Ontology)
+      if: steps.dedup_check.outputs.has_new_content == 'true'
+      run: |
+        source .venv/bin/activate
+        today=${{ steps.crawl_step.outputs.crawl_date }}
+        export GMAIL_USER="${{ secrets.GMAIL_USER }}"
+        export GMAIL_APP_PASSWORD="${{ secrets.GMAIL_APP_PASSWORD }}"
+        export EMAIL_TO="${{ secrets.EMAIL_TO }}"
+        export LANGUAGE="${{ vars.LANGUAGE }}"
+
+        AI_FILE="data/${today}_AI_enhanced_${LANGUAGE}.jsonl"
+        if [ -f "$AI_FILE" ]; then
+          echo "Sending email digest for $today..."
+          python email_push/push.py --data "$AI_FILE" --date "$today"
+        else
+          echo "AI file not found, skipping email."
+        fi
 
 
